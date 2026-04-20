@@ -1,18 +1,22 @@
 <template>
   <div class="froth">
     <div
-      v-for=" in 5"
+      v-for="n in 5"
+      :key="n"
       class="foam"
-      :style="{ backgroundColor: beverageStore.currentCreamer?.color }"
+      :style="{ backgroundColor: creamer.color }"
     ></div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useBeverageStore } from "../stores/beverageStore";
+import type { CreamerType } from "../types/beverage";
 
-const beverageStore = useBeverageStore();
+const { creamer } = defineProps<{
+  creamer: CreamerType;
+}>();
 </script>
+
 <style lang="scss" scoped>
 .froth {
   overflow: visible;
@@ -23,9 +27,9 @@ const beverageStore = useBeverageStore();
   background-color: #c6c6c6;
   animation: pour-tea 2s 2s forwards;
 }
+
 .foam {
   display: block;
-  background: #e4e0d2;
   border-radius: 30px;
   height: 40px;
   width: 40px;

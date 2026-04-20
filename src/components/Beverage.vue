@@ -3,15 +3,20 @@
     <Cold v-if="isIced" />
     <Hot v-else />
     <Contents>
+      
       <template v-slot:top>
-        <Creamer v-if="beverageStore.currentCreamer?.color !== 'transparent'" />
+        <Creamer v-if="creamer.name !== 'No Cream'" :creamer="creamer" />
       </template>
+
       <template v-slot:mid>
-        <Syrup v-if="beverageStore.currentSyrup?.color !== 'transparent'" />
+        <Syrup v-if="syrup.name !== 'No Syrup'" :syrup="syrup" />
       </template>
+
       <template v-slot:bottom>
-        <Base />
+        <Base :base="base" />
+        <Creamer v-if="creamer.name !== 'No Cream' && syrup.name === 'No Syrup'" :creamer="creamer" />
       </template>
+
     </Contents>
   </Mug>
 </template>
@@ -24,12 +29,13 @@ import Creamer from "./Creamer.vue";
 import Hot from "./Hot.vue";
 import Cold from "./Cold.vue";
 
-import { useBeverageStore } from "../stores/beverageStore";
-
-const beverageStore = useBeverageStore();
+import type { BaseBeverageType, CreamerType, SyrupType } from '../types/beverage';
 
 type Props = {
   isIced: boolean;
+  base: BaseBeverageType;
+  creamer: CreamerType;
+  syrup: SyrupType;
 };
 defineProps<Props>();
 </script>
